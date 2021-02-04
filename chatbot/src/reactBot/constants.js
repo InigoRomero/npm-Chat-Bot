@@ -1,6 +1,5 @@
-// Options the user could type in
-const prompts = [
-    ["hi", "hey", "hola", "buenos dias", "Buenas tardes", "Buenas noches", "Buenas", "que pasa", "cuanto tiempo"],
+export const prompts =  [
+    ["hi", "hey", "hello", "good morning", "good afternoon"],
     ["how are you", "how is life", "how are things"],
     ["what are you doing", "what is going on", "what is up"],
     ["how old are you"],
@@ -29,7 +28,7 @@ const prompts = [
   
   // Possible responses, in corresponding order
   
-  const replies = [
+  export const Replies = [
     ["Hola!", "Buenas!", "Hey!"],
     [
       "Fine... how are you?",
@@ -62,7 +61,7 @@ const prompts = [
   
   // Random for any other user input
   
-  const alternative = [
+  export const alternative = [
     "Same",
     "Go on...",
     "Bro...",
@@ -71,6 +70,6 @@ const prompts = [
     "I don't understand :/"
   ]
   
+  export const coronavirus = ["Please stay home", "Wear a mask", "Fortunately, I don't have COVID", "These are uncertain times"]
+
   // Whatever else you want :)
-  
-  const coronavirus = ["Please stay home", "Wear a mask", "Fortunately, I don't have COVID", "These are uncertain times"]

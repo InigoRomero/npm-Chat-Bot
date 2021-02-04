@@ -1,25 +1,48 @@
 {
-  "name": "npm-chat-bot",
-  "version": "1.0.0",
-  "description": "a chatBot for npm",
-  "main": "./reactChatBot.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+  "name": "react-chat-bot42",
+  "version": "0.2.0",
+  "private": false,
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/InigoRomero/npm-Chat-Bot.git"
-  },
-  "keywords": [
-    "chatbot"
-  ],
-  "author": "InigoRomero",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/InigoRomero/npm-Chat-Bot/issues"
-  },
-  "homepage": "https://github.com/InigoRomero/npm-Chat-Bot#readme",
   "dependencies": {
-    "jsx": "^0.9.89"
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.2",
+    "web-vitals": "^1.1.0"
+  },
+  "scripts": {
+    "publish:npm": "rm -rf dist && mkdir dist &&  babel src/components -d dist --copy-files",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.13",
+    "@babel/preset-react": "^7.12.13"
   }
 }

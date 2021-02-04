@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {prompts, Replies, notFound} from './src/DefaultConstants'
+import {prompts, Replies, notFound} from './DefaultConstants'
 import './src/DefaultStyle.css'
 
 export default class reactChatBot extends Component {

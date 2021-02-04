@@ -2,7 +2,7 @@
   "name": "npm-chat-bot",
   "version": "1.0.0",
   "description": "a chatBot for npm",
-  "main": "src/reactChatBot.js",
+  "main": "./reactChatBot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
   },

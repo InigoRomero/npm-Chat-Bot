@@ -28,8 +28,8 @@ export const prompts =  [
   
   // Possible responses, in corresponding order
   
-  export const Replies = [
-    ["Hola!", "Buenas!", "Hey!"],
+  export const Replies =[
+    ["Hello!", "Hi!", "Hey!", "Hi there!","Howdy"],
     [
       "Fine... how are you?",
       "Pretty well, how are you?",
@@ -61,7 +61,7 @@ export const prompts =  [
   
   // Random for any other user input
   
-  export const alternative = [
+  export const notFound = [
     "Same",
     "Go on...",
     "Bro...",
@@ -70,6 +70,3 @@ export const prompts =  [
     "I don't understand :/"
   ]
   
-  export const coronavirus = ["Please stay home", "Wear a mask", "Fortunately, I don't have COVID", "These are uncertain times"]
-
-  // Whatever else you want :)

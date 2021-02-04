@@ -1,23 +1,4 @@
-* {
-    box-sizing: border-box;
-  }
-  
-  html {
-      height: 100%;
-  
-  }
-  
-  body {
-    font-family: 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, Helvetica,
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-      background-color: rgba(223, 242, 247, .5);
-      height: 100%;
-      margin: 0;
-  }
-  
+
   span {
       padding-right: 15px;
       padding-left: 15px;

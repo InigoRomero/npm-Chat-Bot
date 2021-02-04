@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {prompts, Replies, alternative, coronavirus} from './constants'
-import './style.css'
+import {prompts, Replies, notFound} from './DefaultConstants'
+import './DefaultStyle.css'
 
-export default class index extends Component {
+export default class reactChatBot extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,7 +10,10 @@ export default class index extends Component {
       input : '',
       compare : '',
       text: '',
-      product: ''
+      product: '',
+      prompts: this.props.Prompts ? this.props.Prompts : prompts,
+      Replies: this.props.Replies ? this.props.Replies : Replies,
+      notFound: this.props.notFound ? this.props.notFound : notFound
     };
     this.output = this.output.bind(this);
     this.compare = this.compare.bind(this);
@@ -44,10 +47,8 @@ export default class index extends Component {
       product = this.compare();
     } else if (text.match(/thank/gi)) {
       product = "You're welcome!"
-    } else if (text.match(/(corona|covid|virus)/gi)) {
-      product = coronavirus[Math.floor(Math.random() * coronavirus.length)];
     } else {
-      product = alternative[Math.floor(Math.random() * alternative.length)];
+      product = this.state.notFound[Math.floor(Math.random() * this.state.notFound.length)];
     }
     this.setState({product: product});
     this.addChat();
@@ -56,10 +57,10 @@ export default class index extends Component {
   compare() {
     let reply;
     let replyFound = false;
-    for (let x = 0; x < prompts.length; x++) {
-      for (let y = 0; y < prompts[x].length; y++) {
-        if (prompts[x][y] === this.state.text) {
-          let replies = Replies[x];
+    for (let x = 0; x < this.state.prompts.length; x++) {
+      for (let y = 0; y < this.state.prompts[x].length; y++) {
+        if (this.state.prompts[x][y] === this.state.text) {
+          let replies = this.state.Replies[x];
           reply = replies[Math.floor(Math.random() * replies.length)];
           replyFound = true;
           break;

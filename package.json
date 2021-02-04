@@ -1,0 +1,26 @@
+{
+  "name": "npm-chat-bot",
+  "version": "1.0.0",
+  "description": "a chatBot for npm",
+  "main": "src/reactChatBot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node reactChatBot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InigoRomero/npm-Chat-Bot.git"
+  },
+  "keywords": [
+    "chatbot"
+  ],
+  "author": "InigoRomero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/InigoRomero/npm-Chat-Bot/issues"
+  },
+  "homepage": "https://github.com/InigoRomero/npm-Chat-Bot#readme",
+  "dependencies": {
+    "jsx": "^0.9.89"
+  }
+}

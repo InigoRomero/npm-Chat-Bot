@@ -1,6 +1,6 @@
 {
   "name": "react-chat-bot42",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "babel": {
     "presets": [
@@ -16,6 +16,7 @@
     "react-scripts": "4.0.2",
     "web-vitals": "^1.1.0"
   },
+  "main": "src/reactChatBot.js",
   "scripts": {
     "publish:npm": "rm -rf dist && mkdir dist &&  babel src/components -d dist --copy-files",
     "start": "react-scripts start",

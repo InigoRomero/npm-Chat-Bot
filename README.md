@@ -11,6 +11,8 @@ import {prompts, Replies, notFound} from './BotReplies'
 		Prompts={prompts} 
 		Replies={Replies}
 		notFound={notFound}
+        userIcon={"User Icon SRC"}
+        botIcon={"Bot Icon SRC"}
 	/>
 ```
 
@@ -32,6 +34,8 @@ export const prompts =  [
     "Same",
     "Go on...",
 ];
+
+https://github.com/InigoRomero/npm-Chat-Bot
 ```
 
 

@@ -104,14 +104,12 @@ export default class reactChatBot extends Component {
 	render() {
 		
 		return (
-			<div>
-				<div id="container" className="container">
-					<div id="chat" className="chat">
-						<div id="messages" className="messages"></div>
-						<input id="input" type="text" placeholder="Say something..." autoComplete="off" autoFocus={true} />
-					</div>
-				</div>
-			</div>
+      <div id="container" className="container">
+        <div id="chat" className="chat">
+          <div id="messages" className="messages"></div>
+          <input id="input" type="text" placeholder="Say something..." autoComplete="off" autoFocus={true} />
+        </div>
+      </div>
 		)
 	}
 };

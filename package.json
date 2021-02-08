@@ -1,6 +1,6 @@
 {
   "name": "react-chat-bot42",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": false,
   "babel": {
     "presets": [
@@ -11,8 +11,6 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.1.0"
   },
@@ -42,8 +40,12 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@babel/cli": "^7.12.13",
-    "@babel/preset-react": "^7.12.13"
+  "peerDependencies": {      
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {      
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }

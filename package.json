@@ -3,7 +3,7 @@
   "version": "0.6.6",
   "private": false,
   "description": "An ES6 npm module Chat Bot!",
-  "main": "src/reactChatBot.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "webpack --watch",
     "build": "webpack",
@@ -18,6 +18,7 @@
     "Augmented reality (AR)"
   ],
   "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
     "react": "^16.8.6",
     "webpack": "^4.29.6"
   },

@@ -7,7 +7,6 @@ import chatBot from 'react-chat-bot42';
 import {prompts, Replies, notFound} from './BotReplies'
 
 <ReactBot  
-        Styles={styles} 
 		Prompts={prompts} 
 		Replies={Replies}
 		notFound={notFound}

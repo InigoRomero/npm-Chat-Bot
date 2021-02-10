@@ -1,37 +1,48 @@
 {
   "name": "react-chat-bot42",
-  "version": "0.6.6",
+  "version": "0.6.9",
   "private": false,
   "description": "An ES6 npm module Chat Bot!",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "babel src -d dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
   },
   "author": "Iñigo Romero",
   "license": "MIT",
   "keywords": [
-    "promise",
-    "async",
-    "Virtual reality (VR)",
-    "Augmented reality (AR)"
+    "Chabot",
+    "react"
   ],
   "dependencies": {
+    "@babel/plugin-syntax-jsx": "^7.12.13",
     "babel-preset-es2015": "^6.24.1",
-    "react": "^16.8.6",
-    "webpack": "^4.29.6"
+    "extract-text-webpack-plugin": "^3.0.2",
+    "path": "^0.12.7",
+    "react": "^16.14.0",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/plugin-proposal-class-properties": "^7.12.13",
+    "@babel/plugin-transform-runtime": "^7.12.15",
+    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
+    "autoprefixer": "^10.2.4",
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^8.2.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^5.0.2",
+    "html-webpack-plugin": "^5.0.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/InigoRomero/npm-Chat-Bot"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-react"
-    ]
   }
 }

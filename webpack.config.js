@@ -1,39 +1,23 @@
-// webpack.config.js
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: 'src/reactChatBot.js',
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: './src/reactChatBot.js',
-    libraryTarget: 'commonjs2'
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index.js'
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
-        exclude: /(node_modules|bower_components|build)/,
+			{
+				test: /\.js?$/,
+				exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env']
+            presets: ['@babel/env']
           }
         }
-      }, {
-        test: /\.*css$/,
-        use : ExtractTextPlugin.extract({
-            fallback : 'style-loader',
-            use : [
-                'css-loader',
-                'sass-loader'
-            ]
-        })
-       },
-    ]
-  },
-  externals: {
-    'react': 'commonjs react' 
+			}
+		]
   }
-};
+}

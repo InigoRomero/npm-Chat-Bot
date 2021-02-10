@@ -1,7 +1,7 @@
 {
   "name": "react-chat-bot42",
-  "version": "0.6.9",
-  "private": false,
+  "version": "0.7.1",
+  "private": true,
   "description": "An ES6 npm module Chat Bot!",
   "main": "dist/index.js",
   "scripts": {

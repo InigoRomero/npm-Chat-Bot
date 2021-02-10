@@ -1,4 +1,4 @@
-export const prompts =  [
+export const Dprompts =  [
     ["hi", "hey", "hello", "good morning", "good afternoon"],
     ["how are you", "how is life", "how are things"],
     ["what are you doing", "what is going on", "what is up"],
@@ -28,7 +28,7 @@ export const prompts =  [
   
   // Possible responses, in corresponding order
   
-  export const Replies =[
+  export const DReplies =[
     ["Hello!", "Hi!", "Hey!", "Hi there!","Howdy"],
     [
       "Fine... how are you?",
@@ -61,7 +61,7 @@ export const prompts =  [
   
   // Random for any other user input
   
-  export const notFound = [
+  export const DnotFound = [
     "Same",
     "Go on...",
     "Bro...",

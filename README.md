@@ -2,7 +2,7 @@
 # Still in development
 #### React Usage 
 
-```react 
+```js 
 import ReactBot from 'react-chat-bot42'
 import {prompts, Replies, notFound} from './BotReplies'
 
@@ -16,7 +16,7 @@ import {prompts, Replies, notFound} from './BotReplies'
 ```
 
 Examples of prompts, Replies, notFound(He have prompts, replies and notFound by default if you dont have anyone):
-```react
+```js
 export const prompts =  [
     ["hi", "hey", "hello", "good morning", "good afternoon"],
     ["how are you", "how is life", "how are things"],

@@ -1,14 +1,116 @@
-!function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=3)}([function(e,t,r){"use strict";e.exports=r(1)},function(e,t,r){"use strict";
-/** @license React v16.14.0
- * react.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */var n=r(2),o="function"==typeof Symbol&&Symbol.for,u=o?Symbol.for("react.element"):60103,a=o?Symbol.for("react.portal"):60106,l=o?Symbol.for("react.fragment"):60107,i=o?Symbol.for("react.strict_mode"):60108,c=o?Symbol.for("react.profiler"):60114,f=o?Symbol.for("react.provider"):60109,s=o?Symbol.for("react.context"):60110,p=o?Symbol.for("react.forward_ref"):60112,y=o?Symbol.for("react.suspense"):60113,d=o?Symbol.for("react.memo"):60115,h=o?Symbol.for("react.lazy"):60116,m="function"==typeof Symbol&&Symbol.iterator;function v(e){for(var t="https://reactjs.org/docs/error-decoder.html?invariant="+e,r=1;r<arguments.length;r++)t+="&args[]="+encodeURIComponent(arguments[r]);return"Minified React error #"+e+"; visit "+t+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}var b={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},g={};function w(e,t,r){this.props=e,this.context=t,this.refs=g,this.updater=r||b}function S(){}function k(e,t,r){this.props=e,this.context=t,this.refs=g,this.updater=r||b}w.prototype.isReactComponent={},w.prototype.setState=function(e,t){if("object"!=typeof e&&"function"!=typeof e&&null!=e)throw Error(v(85));this.updater.enqueueSetState(this,e,t,"setState")},w.prototype.forceUpdate=function(e){this.updater.enqueueForceUpdate(this,e,"forceUpdate")},S.prototype=w.prototype;var j=k.prototype=new S;j.constructor=k,n(j,w.prototype),j.isPureReactComponent=!0;var _={current:null},O=Object.prototype.hasOwnProperty,E={key:!0,ref:!0,__self:!0,__source:!0};function P(e,t,r){var n,o={},a=null,l=null;if(null!=t)for(n in void 0!==t.ref&&(l=t.ref),void 0!==t.key&&(a=""+t.key),t)O.call(t,n)&&!E.hasOwnProperty(n)&&(o[n]=t[n]);var i=arguments.length-2;if(1===i)o.children=r;else if(1<i){for(var c=Array(i),f=0;f<i;f++)c[f]=arguments[f+2];o.children=c}if(e&&e.defaultProps)for(n in i=e.defaultProps)void 0===o[n]&&(o[n]=i[n]);return{$$typeof:u,type:e,key:a,ref:l,props:o,_owner:_.current}}function C(e){return"object"==typeof e&&null!==e&&e.$$typeof===u}var x=/\/+/g,$=[];function I(e,t,r,n){if($.length){var o=$.pop();return o.result=e,o.keyPrefix=t,o.func=r,o.context=n,o.count=0,o}return{result:e,keyPrefix:t,func:r,context:n,count:0}}function R(e){e.result=null,e.keyPrefix=null,e.func=null,e.context=null,e.count=0,10>$.length&&$.push(e)}function T(e,t,r){return null==e?0:function e(t,r,n,o){var l=typeof t;"undefined"!==l&&"boolean"!==l||(t=null);var i=!1;if(null===t)i=!0;else switch(l){case"string":case"number":i=!0;break;case"object":switch(t.$$typeof){case u:case a:i=!0}}if(i)return n(o,t,""===r?"."+M(t,0):r),1;if(i=0,r=""===r?".":r+":",Array.isArray(t))for(var c=0;c<t.length;c++){var f=r+M(l=t[c],c);i+=e(l,f,n,o)}else if(null===t||"object"!=typeof t?f=null:f="function"==typeof(f=m&&t[m]||t["@@iterator"])?f:null,"function"==typeof f)for(t=f.call(t),c=0;!(l=t.next()).done;)i+=e(l=l.value,f=r+M(l,c++),n,o);else if("object"===l)throw n=""+t,Error(v(31,"[object Object]"===n?"object with keys {"+Object.keys(t).join(", ")+"}":n,""));return i}(e,"",t,r)}function M(e,t){return"object"==typeof e&&null!==e&&null!=e.key?function(e){var t={"=":"=0",":":"=2"};return"$"+(""+e).replace(/[=:]/g,(function(e){return t[e]}))}(e.key):t.toString(36)}function H(e,t){e.func.call(e.context,t,e.count++)}function N(e,t,r){var n=e.result,o=e.keyPrefix;e=e.func.call(e.context,t,e.count++),Array.isArray(e)?A(e,n,r,(function(e){return e})):null!=e&&(C(e)&&(e=function(e,t){return{$$typeof:u,type:e.type,key:t,ref:e.ref,props:e.props,_owner:e._owner}}(e,o+(!e.key||t&&t.key===e.key?"":(""+e.key).replace(x,"$&/")+"/")+r)),n.push(e))}function A(e,t,r,n,o){var u="";null!=r&&(u=(""+r).replace(x,"$&/")+"/"),T(e,N,t=I(t,u,n,o)),R(t)}var F={current:null};function q(){var e=F.current;if(null===e)throw Error(v(321));return e}var B={ReactCurrentDispatcher:F,ReactCurrentBatchConfig:{suspense:null},ReactCurrentOwner:_,IsSomeRendererActing:{current:!1},assign:n};t.Children={map:function(e,t,r){if(null==e)return e;var n=[];return A(e,n,null,t,r),n},forEach:function(e,t,r){if(null==e)return e;T(e,H,t=I(null,null,t,r)),R(t)},count:function(e){return T(e,(function(){return null}),null)},toArray:function(e){var t=[];return A(e,t,null,(function(e){return e})),t},only:function(e){if(!C(e))throw Error(v(143));return e}},t.Component=w,t.Fragment=l,t.Profiler=c,t.PureComponent=k,t.StrictMode=i,t.Suspense=y,t.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=B,t.cloneElement=function(e,t,r){if(null==e)throw Error(v(267,e));var o=n({},e.props),a=e.key,l=e.ref,i=e._owner;if(null!=t){if(void 0!==t.ref&&(l=t.ref,i=_.current),void 0!==t.key&&(a=""+t.key),e.type&&e.type.defaultProps)var c=e.type.defaultProps;for(f in t)O.call(t,f)&&!E.hasOwnProperty(f)&&(o[f]=void 0===t[f]&&void 0!==c?c[f]:t[f])}var f=arguments.length-2;if(1===f)o.children=r;else if(1<f){c=Array(f);for(var s=0;s<f;s++)c[s]=arguments[s+2];o.children=c}return{$$typeof:u,type:e.type,key:a,ref:l,props:o,_owner:i}},t.createContext=function(e,t){return void 0===t&&(t=null),(e={$$typeof:s,_calculateChangedBits:t,_currentValue:e,_currentValue2:e,_threadCount:0,Provider:null,Consumer:null}).Provider={$$typeof:f,_context:e},e.Consumer=e},t.createElement=P,t.createFactory=function(e){var t=P.bind(null,e);return t.type=e,t},t.createRef=function(){return{current:null}},t.forwardRef=function(e){return{$$typeof:p,render:e}},t.isValidElement=C,t.lazy=function(e){return{$$typeof:h,_ctor:e,_status:-1,_result:null}},t.memo=function(e,t){return{$$typeof:d,type:e,compare:void 0===t?null:t}},t.useCallback=function(e,t){return q().useCallback(e,t)},t.useContext=function(e,t){return q().useContext(e,t)},t.useDebugValue=function(){},t.useEffect=function(e,t){return q().useEffect(e,t)},t.useImperativeHandle=function(e,t,r){return q().useImperativeHandle(e,t,r)},t.useLayoutEffect=function(e,t){return q().useLayoutEffect(e,t)},t.useMemo=function(e,t){return q().useMemo(e,t)},t.useReducer=function(e,t,r){return q().useReducer(e,t,r)},t.useRef=function(e){return q().useRef(e)},t.useState=function(e){return q().useState(e)},t.version="16.14.0"},function(e,t,r){"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/var n=Object.getOwnPropertySymbols,o=Object.prototype.hasOwnProperty,u=Object.prototype.propertyIsEnumerable;function a(e){if(null==e)throw new TypeError("Object.assign cannot be called with null or undefined");return Object(e)}e.exports=function(){try{if(!Object.assign)return!1;var e=new String("abc");if(e[5]="de","5"===Object.getOwnPropertyNames(e)[0])return!1;for(var t={},r=0;r<10;r++)t["_"+String.fromCharCode(r)]=r;if("0123456789"!==Object.getOwnPropertyNames(t).map((function(e){return t[e]})).join(""))return!1;var n={};return"abcdefghijklmnopqrst".split("").forEach((function(e){n[e]=e})),"abcdefghijklmnopqrst"===Object.keys(Object.assign({},n)).join("")}catch(e){return!1}}()?Object.assign:function(e,t){for(var r,l,i=a(e),c=1;c<arguments.length;c++){for(var f in r=Object(arguments[c]))o.call(r,f)&&(i[f]=r[f]);if(n){l=n(r);for(var s=0;s<l.length;s++)u.call(r,l[s])&&(i[l[s]]=r[l[s]])}}return i}},function(e,t,r){"use strict";r.r(t);var n=r(0),o=r.n(n),u=[["hi","hey","hello","good morning","good afternoon"],["how are you","how is life","how are things"],["what are you doing","what is going on","what is up"],["how old are you"],["who are you","are you human","are you bot","are you human or bot"],["who created you","who made you"],["your name please","your name","may i know your name","what is your name","what call yourself"],["i love you"],["happy","good","fun","wonderful","fantastic","cool"],["bad","bored","tired"],["help me","tell me story","tell me joke"],["ah","yes","ok","okay","nice"],["bye","good bye","goodbye","see you later"],["what should i eat today"],["bro"],["what","why","how","where","when"],["no","not sure","maybe","no thanks"],[""],["haha","ha","lol","hehe","funny","joke"]],a=[["Hello!","Hi!","Hey!","Hi there!","Howdy"],["Fine... how are you?","Pretty well, how are you?","Fantastic, how are you?"],["Nothing much","About to go to sleep","Can you guess?","I don't know actually"],["I am infinite"],["I am just a bot","I am a bot. What are you?"],["The one true God, JavaScript"],["I am nameless","I don't have a name"],["I love you too","Me too"],["Have you ever felt bad?","Glad to hear it"],["Why?","Why? You shouldn't!","Try watching TV"],["What about?","Once upon a time..."],["Tell me a story","Tell me a joke","Tell me about yourself"],["Bye","Goodbye","See you later"],["Sushi","Pizza"],["Bro!"],["Great question"],["That's ok","I understand","What do you want to talk about?"],["Please say something :("],["Haha!","Good one!"]],l=["Same","Go on...","Bro...","Try again","I'm listening...","I don't understand :/"];t.default=function(e){var t=e.Prompts?e.Prompts:u,r=e.Replies?e.Replies:a,n=e.notFound?e.notFound:l,i=e.botIcon,c=e.userIcon,f="",s="",p="";function y(){for(var e,n=!1,o=0;o<t.length;o++){for(var u=0;u<t[o].length;u++)if(t[o][u]===s){var a=r[o];e=a[Math.floor(Math.random()*a.length)],n=!0;break}if(n)break}return e}return window.onload=function(){var e=document.getElementById("input");e.addEventListener("keydown",(function(t){"Enter"===t.code&&(f=e.value,e.value="",function(){var e,t=f.toLowerCase().replace(/[^\w\s]/gi,"").replace(/[\d]/gi,"").trim();t=t.replace(/ a /g," ").replace(/i feel /g,"").replace(/whats/g,"what is").replace(/please /g,"").replace(/ please/g,"").replace(/r u/g,"are you"),s=t,e=y()?y():t.match(/thank/gi)?"You're welcome!":n[Math.floor(Math.random()*n.length)];p=e,function(){var e=document.getElementById("messages"),t=document.createElement("div");t.id="user",t.className="user response",t.innerHTML='<img src="'+c+'" class="avatar"><span>'.concat(s,"</span>"),e.appendChild(t);var r=document.createElement("div"),n=document.createElement("img"),o=document.createElement("span");r.id="bot",n.src=i,n.className="avatar",r.className="bot response",o.innerText="...",r.appendChild(o),r.appendChild(n),e.appendChild(r),e.scrollTop=e.scrollHeight-e.clientHeight,setTimeout((function(){o.innerText="".concat(p)}),2e3)}()}())}))},o.a.createElement("div",{id:"container",className:"container"},o.a.createElement("div",{id:"chat",className:"chat"},o.a.createElement("div",{id:"messages",className:"messages"}),o.a.createElement("input",{id:"input",type:"text",placeholder:"Say something...",autoComplete:"off",autoFocus:!0})))}}]);
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var React = _interopDefault(require('react'));
+
+var Dprompts = [["hi", "hey", "hello", "good morning", "good afternoon"], ["how are you", "how is life", "how are things"], ["what are you doing", "what is going on", "what is up"], ["how old are you"], ["who are you", "are you human", "are you bot", "are you human or bot"], ["who created you", "who made you"], ["your name please", "your name", "may i know your name", "what is your name", "what call yourself"], ["i love you"], ["happy", "good", "fun", "wonderful", "fantastic", "cool"], ["bad", "bored", "tired"], ["help me", "tell me story", "tell me joke"], ["ah", "yes", "ok", "okay", "nice"], ["bye", "good bye", "goodbye", "see you later"], ["what should i eat today"], ["bro"], ["what", "why", "how", "where", "when"], ["no", "not sure", "maybe", "no thanks"], [""], ["haha", "ha", "lol", "hehe", "funny", "joke"]];
+var DReplies = [["Hello!", "Hi!", "Hey!", "Hi there!", "Howdy"], ["Fine... how are you?", "Pretty well, how are you?", "Fantastic, how are you?"], ["Nothing much", "About to go to sleep", "Can you guess?", "I don't know actually"], ["I am infinite"], ["I am just a bot", "I am a bot. What are you?"], ["The one true God, JavaScript"], ["I am nameless", "I don't have a name"], ["I love you too", "Me too"], ["Have you ever felt bad?", "Glad to hear it"], ["Why?", "Why? You shouldn't!", "Try watching TV"], ["What about?", "Once upon a time..."], ["Tell me a story", "Tell me a joke", "Tell me about yourself"], ["Bye", "Goodbye", "See you later"], ["Sushi", "Pizza"], ["Bro!"], ["Great question"], ["That's ok", "I understand", "What do you want to talk about?"], ["Please say something :("], ["Haha!", "Good one!"]];
+var DnotFound = ["Same", "Go on...", "Bro...", "Try again", "I'm listening...", "I don't understand :/"];
+
+var ReactChatBot = function ReactChatBot(_ref) {
+  var PromptsBot = _ref.PromptsBot,
+      RepliesBot = _ref.RepliesBot,
+      notFoundBot = _ref.notFoundBot,
+      botIcon = _ref.botIcon,
+      userIcon = _ref.userIcon;
+  var prompts = PromptsBot ? props.Prompts : Dprompts,
+      Replies = RepliesBot ? props.Replies : DReplies,
+      notFound = notFoundBot ? props.notFound : DnotFound,
+      input = '',
+      text = '',
+      product = '';
+
+  window.onload = function () {
+    var inputField = document.getElementById("input");
+    inputField.addEventListener("keydown", function (e) {
+      if (e.code === "Enter") {
+        input = inputField.value;
+        inputField.value = "";
+        output();
+      }
+    });
+  };
+
+  function output() {
+    var product2;
+    var text2 = input.toLowerCase().replace(/[^\w\s]/gi, "").replace(/[\d]/gi, "").trim();
+    text2 = text2.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "").replace(/r u/g, "are you");
+    text = text2;
+
+    if (compare()) {
+      product2 = compare();
+    } else if (text2.match(/thank/gi)) {
+      product2 = "You're welcome!";
+    } else {
+      product2 = notFound[Math.floor(Math.random() * notFound.length)];
+    }
+
+    product = product2;
+    addChat();
+  }
+
+  function compare() {
+    var reply;
+    var replyFound = false;
+
+    for (var x = 0; x < prompts.length; x++) {
+      for (var y = 0; y < prompts[x].length; y++) {
+        if (prompts[x][y] === text) {
+          var replies = Replies[x];
+          reply = replies[Math.floor(Math.random() * replies.length)];
+          replyFound = true;
+          break;
+        }
+      }
+
+      if (replyFound) {
+        break;
+      }
+    }
+
+    return reply;
+  }
+
+  function addChat() {
+    var messagesContainer = document.getElementById("messages");
+    var userDiv = document.createElement("div");
+    userDiv.id = "user";
+    userDiv.className = "user response";
+    userDiv.innerHTML = "<img src=\"" + userIcon + ("\" class=\"avatar\"><span>" + text + "</span>");
+    messagesContainer.appendChild(userDiv);
+    var botDiv = document.createElement("div");
+    var botImg = document.createElement("img");
+    var botText = document.createElement("span");
+    botDiv.id = "bot";
+    botImg.src = botIcon;
+    botImg.className = "avatar";
+    botDiv.className = "bot response";
+    botText.innerText = "...";
+    botDiv.appendChild(botText);
+    botDiv.appendChild(botImg);
+    messagesContainer.appendChild(botDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight - messagesContainer.clientHeight;
+    setTimeout(function () {
+      botText.innerText = "" + product;
+    }, 2000);
+  }
+
+  return /*#__PURE__*/React.createElement("div", {
+    id: "container",
+    className: "container"
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "chat",
+    className: "chat"
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "messages",
+    className: "messages"
+  }), /*#__PURE__*/React.createElement("input", {
+    id: "input",
+    type: "text",
+    placeholder: "Say something...",
+    autoComplete: "off",
+    autoFocus: true
+  })));
+};
+
+module.exports = ReactChatBot;
+//# sourceMappingURL=index.js.map

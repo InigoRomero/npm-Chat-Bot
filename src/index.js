@@ -1,13 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react'
+import styles from './styles.module.css'
 import {Dprompts, DReplies, DnotFound} from './DefaultConstants'
-//import './DefaultStyle.css'
-const reactChatBot = props => {
+
+ const ReactChatBot = ({ PromptsBot, RepliesBot, notFoundBot, botIcon, userIcon  }) => {
   let
-    prompts = props.Prompts ? props.Prompts : Dprompts, 
-    Replies = props.Replies ? props.Replies : DReplies,
-    notFound = props.notFound ? props.notFound : DnotFound,
-    botIcon = props.botIcon,
-    userIcon = props.userIcon,
+    prompts = PromptsBot ? props.Prompts : Dprompts, 
+    Replies = RepliesBot ? props.Replies : DReplies,
+    notFound = notFoundBot ? props.notFound : DnotFound,
     input = '',
     text = '',
     product = '';
@@ -100,6 +99,6 @@ const reactChatBot = props => {
         </div>
       </div>
 		);
-};
+}
 
-export default reactChatBot;
+export default ReactChatBot;

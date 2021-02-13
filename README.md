@@ -11,6 +11,8 @@ Functional chat bot where you pass the predefined respects to the messages on yo
 - reading voice
 
 ![alt text](https://github.com/InigoRomero/npm-Chat-Bot/blob/main/src/screen.PNG)
+
+# React Usage
 ```js 
 import ReactBot from 'react-chat-bot42'
 import {prompts, Replies, notFound} from './BotReplies'

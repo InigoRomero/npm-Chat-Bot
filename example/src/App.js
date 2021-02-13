@@ -1,10 +1,13 @@
 import React from 'react'
-
-import { react-chat-bot42 } from 'react-chat-bot42'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactBot from 'react-chat-bot42'
 import 'react-chat-bot42/dist/index.css'
 
 const App = () => {
-  return <react-chat-bot42 text="Create React Library Example 😄" />
+  return <ReactBot  
+      userIcon={"user.png"}
+      botIcon={"bot.png"}
+  />
 }
 
 export default App

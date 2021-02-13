@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles.module.css'
+import './styles.module.css'
 import {Dprompts, DReplies, DnotFound} from './DefaultConstants'
 
  const ReactChatBot = ({ PromptsBot, RepliesBot, notFoundBot, botIcon, userIcon  }) => {
@@ -63,21 +63,24 @@ import {Dprompts, DReplies, DnotFound} from './DefaultConstants'
   }
 
   function addChat() {
-    const messagesContainer = document.getElementById("messages");
+    const messagesContainer = document.getElementById("chat-content");
     let userDiv = document.createElement("div");
     userDiv.id = "user";
-    userDiv.className = "user response";
-    userDiv.innerHTML = `<img src="`+ userIcon +`" class="avatar"><span>${text}</span>`;
+    userDiv.className = "media media-chat";
+    userDiv.innerHTML = `<img src="`+ userIcon +`" className="avatar"><div className="media-body"><p>${text}</p></div>`;
     messagesContainer.appendChild(userDiv);
 
     let botDiv = document.createElement("div");
+    let botDiv2 = document.createElement("div");
     let botImg = document.createElement("img");
-    let botText = document.createElement("span");
+    let botText = document.createElement("p");
     botDiv.id = "bot";
     botImg.src = botIcon;
+    botDiv2.className = "media-body";
     botImg.className = "avatar";
-    botDiv.className = "bot response";
+    botDiv.className = "media media-chat media-chat-reverse";
     botText.innerText = "...";
+
     botDiv.appendChild(botText);
     botDiv.appendChild(botImg);
     messagesContainer.appendChild(botDiv);
@@ -92,12 +95,23 @@ import {Dprompts, DReplies, DnotFound} from './DefaultConstants'
   }
 		
 		return (
-      <div id="container" className="container">
-        <div id="chat" className="chat">
-          <div id="messages" className="messages"></div>
-          <input id="input" type="text" placeholder="Say something..." autoComplete="off" autoFocus={true} />
+      <div className="page-content page-container" id="page-content">
+      <div className="padding">
+        <div className="row container d-flex justify-content-center">
+          <div className="col-md-6">
+            <div className="card card-bordered">
+              <div className="card-header">
+                <h4 className="card-title"><strong>Chat</strong></h4>
+              </div>
+              <div  className="ps-container ps-theme-default ps-active-y" id="chat-content">
+
+              </div>
+              <div className="publisher bt-1 border-light"> <img id="avatarUser" className="avatar avatar-xs" src={userIcon} alt="..."/> <input id="input" className="publisher-input" type="text" placeholder="Write something"/></div>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 		);
 }
 

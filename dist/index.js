@@ -71,19 +71,21 @@ var ReactChatBot = function ReactChatBot(_ref) {
   }
 
   function addChat() {
-    var messagesContainer = document.getElementById("messages");
+    var messagesContainer = document.getElementById("chat-content");
     var userDiv = document.createElement("div");
     userDiv.id = "user";
-    userDiv.className = "user response";
-    userDiv.innerHTML = "<img src=\"" + userIcon + ("\" class=\"avatar\"><span>" + text + "</span>");
+    userDiv.className = "media media-chat";
+    userDiv.innerHTML = "<img src=\"" + userIcon + ("\" className=\"avatar\"><div className=\"media-body\"><p>" + text + "</p></div>");
     messagesContainer.appendChild(userDiv);
     var botDiv = document.createElement("div");
+    var botDiv2 = document.createElement("div");
     var botImg = document.createElement("img");
-    var botText = document.createElement("span");
+    var botText = document.createElement("p");
     botDiv.id = "bot";
     botImg.src = botIcon;
+    botDiv2.className = "media-body";
     botImg.className = "avatar";
-    botDiv.className = "bot response";
+    botDiv.className = "media media-chat media-chat-reverse";
     botText.innerText = "...";
     botDiv.appendChild(botText);
     botDiv.appendChild(botImg);
@@ -95,21 +97,36 @@ var ReactChatBot = function ReactChatBot(_ref) {
   }
 
   return /*#__PURE__*/React.createElement("div", {
-    id: "container",
-    className: "container"
+    className: "page-content page-container",
+    id: "page-content"
   }, /*#__PURE__*/React.createElement("div", {
-    id: "chat",
-    className: "chat"
+    className: "padding"
   }, /*#__PURE__*/React.createElement("div", {
-    id: "messages",
-    className: "messages"
-  }), /*#__PURE__*/React.createElement("input", {
+    className: "row container d-flex justify-content-center"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "col-md-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card card-bordered"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card-header"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "card-title"
+  }, /*#__PURE__*/React.createElement("strong", null, "Chat"))), /*#__PURE__*/React.createElement("div", {
+    className: "ps-container ps-theme-default ps-active-y",
+    id: "chat-content"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "publisher bt-1 border-light"
+  }, " ", /*#__PURE__*/React.createElement("img", {
+    id: "avatarUser",
+    className: "avatar avatar-xs",
+    src: userIcon,
+    alt: "..."
+  }), " ", /*#__PURE__*/React.createElement("input", {
     id: "input",
+    className: "publisher-input",
     type: "text",
-    placeholder: "Say something...",
-    autoComplete: "off",
-    autoFocus: true
-  })));
+    placeholder: "Write something"
+  })))))));
 };
 
 module.exports = ReactChatBot;

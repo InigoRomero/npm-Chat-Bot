@@ -6,6 +6,8 @@ import 'react-chat-bot42/dist/index.css'
 const App = () => {
   return (
       <center>
+        <h1>React Chat Bot42</h1>
+        <p>By Iñigo Romero |<a href="https://github.com/InigoRomero/npm-Chat-Bot"> Repository</a> | <a href="https://www.linkedin.com/in/iromero-/"> LinKedIn</a></p>
         <ReactBot  
           userIcon={"user.png"}
           botIcon={"bot.png"}

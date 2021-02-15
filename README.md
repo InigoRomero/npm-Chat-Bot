@@ -6,7 +6,6 @@ Functional chat bot where you pass the predefined respects to the messages on yo
 #### Example Code https://github.com/InigoRomero/npm-Chat-Bot/tree/main/example
 
 ### Still working on:
-- mobile devices
 - Default Welcome Message
 - reading voice
 

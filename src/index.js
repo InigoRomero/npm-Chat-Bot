@@ -13,13 +13,20 @@ import {Dprompts, DReplies, DnotFound} from './DefaultConstants'
   window.onload = function() {
     let inputField = document.getElementById("input");
     inputField.addEventListener("keydown", (e) => {
-      if (e.code === "Enter") {
+      if (e.code === "Enter" && inputField.value != "") {
+
+      }
+    });
+    inputField = document.getElementById("input");
+    inputField.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13 && inputField.value != "") {
         input = inputField.value;
         inputField.value = "";
         output();
       }
     });
   }
+
     
   function output() {
     let product2;
@@ -106,7 +113,7 @@ import {Dprompts, DReplies, DnotFound} from './DefaultConstants'
               <div  className="ps-container ps-theme-default ps-active-y" id="chat-content">
 
               </div>
-              <div className="publisher bt-1 border-light"> <img id="avatarUser" className="avatar avatar-xs" src={userIcon} alt="..."/> <input id="input" className="publisher-input" type="text" placeholder="Write something"/></div>
+              <div className="publisher bt-1 border-light"> <img id="avatarUser" className="avatar avatar-xs" src={userIcon} alt="..."/> <input id="input" className="publisher-input" type="text" placeholder="Write something" required/></div>
             </div>
           </div>
         </div>

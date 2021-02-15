@@ -22,7 +22,10 @@ var ReactChatBot = function ReactChatBot(_ref) {
   window.onload = function () {
     var inputField = document.getElementById("input");
     inputField.addEventListener("keydown", function (e) {
-      if (e.code === "Enter") {
+    });
+    inputField = document.getElementById("input");
+    inputField.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13 && inputField.value != "") {
         input = inputField.value;
         inputField.value = "";
         output();
@@ -125,7 +128,8 @@ var ReactChatBot = function ReactChatBot(_ref) {
     id: "input",
     className: "publisher-input",
     type: "text",
-    placeholder: "Write something"
+    placeholder: "Write something",
+    required: true
   })))))));
 };
 

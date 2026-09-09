@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  pages: write
 concurrency:
   group: github-pages
   cancel-in-progress: false
@@ -32,3 +33,7 @@ jobs:
             git -C work/pages -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "Deploy demo from $GITHUB_SHA"
             git -C work/pages push origin HEAD:gh-pages
           fi
+      - name: Request and verify the Pages build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/request-pages-build.mjs

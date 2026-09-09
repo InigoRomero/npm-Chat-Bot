@@ -1,383 +1,235 @@
-### NPM Chat Bot 42 ES6 Module
-# Still in development
-#### Welcome
-Functional chat bot where you pass the predefined respects to the messages on your website. 
-#### Online demo https://inigoromero.github.io/npm-Chat-Bot/
-#### Example Code https://github.com/InigoRomero/npm-Chat-Bot/tree/main/example
+# react-chat-bot42
 
-### Still working on:
-- Default Welcome Message
-- reading voice
+A small, accessible chatbot component and headless hook for **React 18 and 19**, written in TypeScript. Use predefined replies or connect your own backend with an async response provider. No runtime dependencies beyond React.
 
-![alt text](https://github.com/InigoRomero/npm-Chat-Bot/blob/main/src/screen.PNG)
+> This branch prepares **1.0.0-next.0**. It is a breaking upgrade from 0.7.x and has not been published to npm by this change. See [migration notes](#migrating-from-07x).
 
-# React Usage
+## Quick start
 
-```shell
-npm i react-chat-bot42
+After this version is published, install the selected version of `react-chat-bot42`. To try the current branch before publication, run `npm ci && npm pack` and install the generated `.tgz` in your application.
+
+```tsx
+import ReactChatBot from 'react-chat-bot42';
+import 'react-chat-bot42/styles.css';
+
+export default function App() {
+  return (
+    <ReactChatBot
+      title="Support"
+      welcomeMessage="Hello! How can I help?"
+      PromptsBot={[
+        ['hello', 'hi'],
+        ['delivery', 'shipping'],
+      ]}
+      RepliesBot={[['Hi there!'], ['Orders arrive in 2–3 working days.']]}
+      notFoundBot={['Please contact support@example.com for help.']}
+      suggestions={['Hello', 'Shipping']}
+    />
+  );
+}
 ```
 
-```js 
-import ReactBot from 'react-chat-bot42'
-import {prompts, Replies, notFound} from './BotReplies'
-GitHub: [<img alt="GitHub" width="26px" src="https://simpleicons.org/icons/github.svg" />]
-<ReactBot  
-  PromptsBot={prompts} 
-  RepliesBot={Replies}
-  notFoundBot={notFound}
-  userIcon={"User Icon SRC"}
-  botIcon={"Bot Icon SRC"}
+Import the stylesheet once in your application. It is separate from JavaScript so Node/SSR imports work without CSS loaders. Styles are scoped under `.rcb`; Bootstrap is not required. For Next.js App Router, put callbacks/hooks inside a Client Component and import the CSS in your layout or stylesheet entry.
+
+## Features
+
+- Welcome messages, local prompt groups, fallback replies and suggested questions.
+- Async providers, streamed text deltas, typing state, stop, retry and reset.
+- Optional bounded conversation persistence in localStorage.
+- Accessible labels, polite chat log, keyboard navigation, Enter to send, Shift+Enter for a new line, IME support.
+- Explicit, opt-in read-aloud buttons using browser speech synthesis.
+- Custom avatars, translated labels, CSS variables and custom message rendering.
+- Independent chat instances, a headless hook, SSR-safe imports and React StrictMode support.
+- ESM, CommonJS and TypeScript declarations; React remains a peer dependency.
+
+This is a chat UI and local reply engine, not a hosted AI service. AI responses require your own backend.
+
+## Connect a backend
+
+```tsx
+import type { ResponseProvider } from 'react-chat-bot42';
+
+const getResponse: ResponseProvider = async (input, { messages, signal }) => {
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ input, messages }),
+    signal,
+  });
+  if (!response.ok) throw new Error(`Chat request failed: ${response.status}`);
+  const data = await response.json();
+  if (typeof data.reply !== 'string') throw new Error('Invalid reply');
+  return data.reply;
+};
+
+// <ReactChatBot getResponse={getResponse} />
+```
+
+Keep provider credentials on your server. `messages` is a bounded snapshot including the current user message and excluding the in-progress assistant placeholder. Forward the AbortSignal to your network client. The UI ignores late results after stop, reset, key changes or unmount. Only one response runs per instance; further sends return `false` while busy. Empty responses and thrown errors expose a retry action; a retry replaces the failed assistant message without duplicating the user's input.
+
+### Streaming
+
+An async iterable yields **deltas**, not the full accumulated response. For a backend returning a raw UTF-8 text stream:
+
+```tsx
+const getResponse: ResponseProvider = async function* (input, { signal }) {
+  const response = await fetch('/api/chat/stream', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ input }),
+    signal,
+  });
+  if (!response.ok || !response.body) throw new Error('Stream unavailable');
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      yield decoder.decode(value, { stream: true });
+    }
+    const tail = decoder.decode();
+    if (tail) yield tail;
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+};
+```
+
+For SSE or another framed protocol, parse its events in your provider before yielding text. Stop retains the partial answer with status `cancelled`. The provider should honor `signal` to release its own resources promptly.
+
+## Component and hook options
+
+| Option                     | Default                            | Behavior                                                                         |
+| -------------------------- | ---------------------------------- | -------------------------------------------------------------------------------- |
+| `PromptsBot`, `RepliesBot` | Built-in groups                    | Arrays of phrase groups and corresponding response groups. Supply both together. |
+| `notFoundBot`              | Built-in fallback                  | Random reply for unmatched input or missing/empty reply groups.                  |
+| `welcomeMessage`           | `Hello! How can I help you today?` | String, or `false` to disable.                                                   |
+| `initialMessages`          | Welcome only                       | Initial `ChatMessage[]`; also used on clear.                                     |
+| `getResponse`              | Local reply engine                 | Sync/async string or async iterable; takes precedence over local rules.          |
+| `responseDelay`            | `0`                                | Optional delay in milliseconds before invoking the provider.                     |
+| `storageKey`               | Off                                | Opt in to localStorage persistence. Use a distinct key per conversation/user.    |
+| `maxMessages`              | `100`                              | Maximum retained messages (oldest removed); bounds provider context and storage. |
+| `maxLength`                | `2000`                             | Maximum user message length; blank or oversized sends are rejected.              |
+| `onMessagesChange`         | —                                  | Receives read-only history after updates, including streamed deltas.             |
+| `onError`                  | —                                  | Receives provider errors; the UI displays a generic translatable message.        |
+
+Local matching normalizes both prompts and input with Unicode NFKC, lowercase, punctuation and whitespace. It preserves accented letters, non-Latin scripts and digits. It uses exact normalized matches, not fuzzy or semantic matching. Original user text remains visible. The first matching group wins; a reply is selected once from that group.
+
+`initialMessages` and `welcomeMessage` seed the conversation on mount, key changes and clear; changing them alone does not reset an active chat. Configuration for replies/providers is read for each new request. `maxMessages` is applied on the next history update. Persistence loads after mount to avoid hydration differences. Corrupt or blocked storage falls back gracefully. Persisted streaming messages restore as cancelled. Clear resets the selected conversation to its initial messages and updates storage. There is no cross-tab synchronization, automatic expiry or encryption; omit `storageKey` for ephemeral conversations, and clear/remove user-specific keys on sign-out. Retry state is in memory and does not survive reload.
+
+### UI-only options
+
+| Option                | Default         | Behavior                                                                        |
+| --------------------- | --------------- | ------------------------------------------------------------------------------- |
+| `title`               | `Chat`          | Header and accessible chat name.                                                |
+| `botIcon`, `userIcon` | None            | Optional avatar URLs.                                                           |
+| `suggestions`         | None            | Quick-send buttons.                                                             |
+| `disabled`            | `false`         | Disables new user input, reset and retry; an active reply can still be stopped. |
+| `labels`              | English         | Partial `ChatLabels` override.                                                  |
+| `speech`              | `false`         | Show read-aloud controls where supported; never autoplay.                       |
+| `speechLang`          | Browser default | Language tag such as `es-ES`.                                                   |
+| `className`, `style`  | —               | Root styling.                                                                   |
+| `renderMessage`       | Plain text      | `(message) => ReactNode` for custom content.                                    |
+
+Speech synthesis uses the browser's shared speech queue; pressing a read-aloud button replaces the current speech. Voice availability depends on the browser/OS. Text renders safely through React; custom renderers are responsible for sanitizing any raw HTML they choose to use.
+
+```tsx
+<ReactChatBot
+  title="Ayuda"
+  welcomeMessage="¡Hola! ¿En qué puedo ayudarte?"
+  speech
+  speechLang="es-ES"
+  labels={{
+    input: 'Mensaje',
+    placeholder: 'Escribe un mensaje…',
+    send: 'Enviar',
+    stop: 'Detener',
+    clear: 'Borrar conversación',
+    retry: 'Reintentar',
+    typing: 'Escribiendo…',
+    user: 'Tú',
+    assistant: 'Asistente',
+    error: 'No se pudo completar la respuesta.',
+    readAloud: 'Leer respuesta',
+  }}
 />
 ```
 
-Examples of prompts, Replies, notFound(He have prompts, replies and notFound by default if you dont have anyone):
-```js
-export const prompts =  [
-    ["hi", "hey", "hello", "good morning", "good afternoon"],
-    ["how are you", "how is life", "how are things"],
-];
- export const Replies =[
-    ["Hello!", "Hi!", "Hey!", "Hi there!","Howdy"],
-    [
-      "Fine... how are you?",
-      "Pretty well, how are you?",
-      "Fantastic, how are you?"
-    ]
-];
- export const notFound = [
-    "Same",
-    "Go on...",
-];
-```
-CSS of the example
 ```css
-
- .card-bordered {
-  border: 1px solid #ebebeb
-}
-
-.card {
-  border: 0;
-  border-radius: 0px;
-  margin-bottom: 30px;
-  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
-  -webkit-transition: .5s;
-  transition: .5s
-}
-
-.padding {
-  padding: 3rem !important
-}
-
-body {
-  background-color: #f9f9fa
-}
-
-.card-header:first-child {
-  border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0
-}
-
-.card-header {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: transparent;
-  border-bottom: 1px solid rgba(77, 82, 89, 0.07)
-}
-
-.card-header .card-title {
-  padding: 0;
-  border: none
-}
-
-h4.card-title {
-  font-size: 17px
-}
-
-.card-header>*:last-child {
-  margin-right: 0
-}
-
-.card-header>* {
-  margin-left: 8px;
-  margin-right: 8px
-}
-
-.btn-xs {
-  font-size: 11px;
-  padding: 2px 8px;
-  line-height: 18px
-}
-
-.btn-xs:hover {
-  color: #fff !important
-}
-
-.card-title {
-  font-family: Roboto, sans-serif;
-  font-weight: 300;
-  line-height: 1.5;
-  margin-bottom: 0;
-  padding: 15px 20px;
-  border-bottom: 1px solid rgba(77, 82, 89, 0.07)
-}
-
-.ps-container {
-  position: relative
-}
-
-.ps-container {
-  -ms-touch-action: auto;
-  touch-action: auto;
-  overflow: hidden !important;
-  -ms-overflow-style: none
-}
-
-.media-chat {
-  padding-right: 64px;
-  margin-bottom: 0;
-  padding: 16px 12px;
-  -webkit-transition: background-color .2s linear;
-  transition: background-color .2s linear
-  
-}
-
-
-.media .avatar {
-  flex-shrink: 0
-}
-
-.avatar {
-  position: relative;
-  display: inline-block;
-  width: 36px  !important;
-  height: 36px !important;
-  line-height: 36px;
-  text-align: center;
-  border-radius: 100%;
-  background-color: #f5f6f7;
-  color: #8b95a5;
-  text-transform: uppercase
-}
-
-.media-chat .media-body {
-  -webkit-box-flex: initial;
-  flex: initial;
-  display: table
-}
-
-.media-chat .media-body p {
-  position: relative;
-  padding: 6px 8px;
-  margin: 4px 0;
-  background-color: #f5f6f7;
-  border-radius: 3px;
-  font-weight: 100;
-  color: #9b9b9b
-}
-
-.media>* {
-  margin: 0 8px
-}
-
-.media-chat .media-body p.meta {
-  background-color: transparent !important;
-  padding: 0;
-  opacity: .8
-}
-
-.media-meta-day {
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  align-items: center;
-  margin-bottom: 0;
-  color: #8b95a5;
-  opacity: .8;
-  font-weight: 400
-}
-
-.media {
-  padding: 16px 12px;
-  -webkit-transition: background-color .2s linear;
-  transition: background-color .2s linear
-}
-
-.media-meta-day::before {
-  margin-right: 16px
-}
-
-.media-meta-day::before,
-.media-meta-day::after {
-  content: '';
-  -webkit-box-flex: 1;
-  flex: 1 1;
-  border-top: 1px solid #ebebeb
-}
-
-.media-meta-day::after {
-  content: '';
-  -webkit-box-flex: 1;
-  flex: 1 1;
-  border-top: 1px solid #ebebeb
-}
-
-.media-meta-day::after {
-  margin-left: 16px
-}
-
-.media-chat.media-chat-reverse {
-  padding-right: 12px;
-  padding-left: 64px;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-  flex-direction: row-reverse
-}
-
-.media-chat {
-  padding-right: 64px;
-  margin-bottom: 0
-}
-
-.media {
-  padding: 16px 12px;
-  -webkit-transition: background-color .2s linear;
-  transition: background-color .2s linear
-}
-
-.media-chat.media-chat-reverse  .media-body p {
-  float: right;
-  clear: right;
-  background-color: #48b0f7;
-  color: #fff
-}
-
-.media-chat .media-body p {
-  position: relative;
-  padding: 6px 8px;
-  margin: 4px 0;
-  background-color: #f5f6f7;
-  border-radius: 3px
-}
-
-.border-light {
-  border-color: #f1f2f3 !important
-}
-
-.bt-1 {
-  border-top: 1px solid #ebebeb !important
-}
-
-.publisher {
-  position: relative;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  padding: 12px 20px;
-  background-color: #f9fafb
-}
-
-.publisher>*:first-child {
-  margin-left: 0
-}
-
-.publisher>* {
-  margin: 0 8px
-}
-
-.publisher-input {
-  -webkit-box-flex: 1;
-  flex-grow: 1;
-  border: none;
-  outline: none !important;
-  background-color: transparent
-}
-
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: Roboto, sans-serif;
-  font-weight: 300
-}
-
-.publisher-btn {
-  background-color: transparent;
-  border: none;
-  color: #8b95a5;
-  font-size: 16px;
-  cursor: pointer;
-  overflow: -moz-hidden-unscrollable;
-  -webkit-transition: .2s linear;
-  transition: .2s linear
-}
-
-.file-group {
-  position: relative;
-  overflow: hidden
-}
-
-.publisher-btn {
-  background-color: transparent;
-  border: none;
-  color: #cac7c7;
-  font-size: 16px;
-  cursor: pointer;
-  overflow: -moz-hidden-unscrollable;
-  -webkit-transition: .2s linear;
-  transition: .2s linear
-}
-
-.file-group input[type="file"] {
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
-  width: 20px
-}
-
-.text-info {
-  color: #48b0f7 !important
-}
-
-.bot {
-  font-family: Consolas, 'Courier New', Menlo, source-code-pro, Monaco,  
-  monospace;
-}
-
-img{
-  height: 36px;
-}
-
-#chat-content{
-  overflow-y: scroll !important; 
-  height:400px !important;
-}
-
-.userMessage{
-  float: left;
-width: 300px;
-height: auto;
-border: 1px solid #CCC;
-background-color: #ffffff;
-border: 1px solid #000000;
-padding: 6px 8px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
--o-border-radius: 5px;
-border-radius: 5px;
+.my-chat {
+  --rcb-accent: #285ddb;
+  --rcb-background: #172437;
+  --rcb-text: #eef2fa;
+  --rcb-muted: #b7c4d7;
+  --rcb-surface: #26354b;
 }
 ```
 
-Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+Pass `className="my-chat"` and load overrides after the library CSS. The log scrolls as replies arrive only while the reader is near the bottom; scrolling up preserves their place.
 
-Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+## Headless hook
 
+```tsx
+import { useChatBot } from 'react-chat-bot42';
 
+function CustomChat() {
+  const { messages, isLoading, error, sendMessage, stop, clear, retry } =
+    useChatBot({
+      welcomeMessage: false,
+      getResponse: async (input) => `You said: ${input}`,
+    });
+  return (
+    <div>
+      {messages.map((message) => (
+        <p key={message.id}>{message.content}</p>
+      ))}
+      <button disabled={isLoading} onClick={() => void sendMessage('Hello')}>
+        Say hello
+      </button>
+      {isLoading && <button onClick={stop}>Stop</button>}
+      {error && <button onClick={() => void retry()}>Retry</button>}
+      <button onClick={clear}>Clear</button>
+    </div>
+  );
+}
+```
 
+`sendMessage(input)` and `retry()` return `Promise<boolean>`: `false` when rejected or unavailable, `true` when accepted (even if the provider subsequently fails or is cancelled). Inspect `error` and message status for the result.
+
+```ts
+interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  createdAt: number; // Unix milliseconds
+  status: 'complete' | 'streaming' | 'error' | 'cancelled';
+}
+```
+
+Named exports include `ReactChatBot`, `useChatBot`, `getLocalReply`, `normalizeInput`, `Dprompts`, `DReplies`, `DnotFound`, and all public TypeScript types. The default export remains the component.
+
+## Migrating from 0.7.x
+
+1. Upgrade your application to React 18.2+ or React 19. React 16 is no longer supported. Repository development requires Node 22.12+.
+2. Keep the default component import and the `PromptsBot`, `RepliesBot`, `notFoundBot`, `botIcon` and `userIcon` props. Custom prompt/reply props now work correctly.
+3. Import `react-chat-bot42/styles.css`. The old `react-chat-bot42/dist/index.css` path remains an alias. Replace old Bootstrap/global CSS overrides with `.rcb` styles or CSS variables.
+4. A welcome message now appears by default; set `welcomeMessage={false}` to hide it. The old hard-coded two-second delay is removed; use `responseDelay={2000}` if desired.
+5. Default answers have been refreshed. Matching preserves numbers and international text and no longer applies the old English-specific phrase rewrites. Add aliases explicitly to your prompt groups when needed.
+6. Direct `dist` JavaScript imports and undocumented internal modules are not public entry points. Use the package root.
+
+## Development and validation
+
+```sh
+npm ci
+npm run dev             # Vite example, local / streaming / error demos
+npm run check           # types, behavioral tests, library + demo builds, actual tarball consumer
+npm run test:watch
+```
+
+CI runs on Node 22/24 with React 18/19. The package test installs the tarball in an isolated consumer and verifies ESM, CommonJS, server rendering, both TypeScript export paths and CSS entry points. React is externalized from the library bundle. The demo deploys to the existing GitHub Pages branch after successful validation on `main`. npm publication remains a separate release step.
+
+For a release, review the migration, choose the version, run `npm run check`, inspect `npm pack --dry-run`, and publish under an appropriate npm dist-tag (for example `next` for this prerelease). Do not publish a prerelease to `latest` by accident.
+
+MIT © Iñigo Romero. Legacy demo icons retained in `example/public` were attributed by the original project to [Smashicons](https://www.flaticon.com/authors/smashicons) and [Freepik](https://www.flaticon.com/authors/freepik) on Flaticon.

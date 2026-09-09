@@ -1,0 +1,34 @@
+name: Deploy demo
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build:example -- --base=/npm-Chat-Bot/
+      - name: Publish the validated demo to the existing Pages branch
+        run: |
+          git worktree add --detach work/pages origin/gh-pages
+          rsync -a --delete --exclude=.git example/dist/ work/pages/
+          touch work/pages/.nojekyll
+          git -C work/pages add -A
+          if ! git -C work/pages diff --cached --quiet; then
+            git -C work/pages -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "Deploy demo from $GITHUB_SHA"
+            git -C work/pages push origin HEAD:gh-pages
+          fi

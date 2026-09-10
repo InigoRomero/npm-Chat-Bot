@@ -1,6 +1,6 @@
 {
   "name": "react-chat-bot42",
-  "version": "1.0.0-next.0",
+  "version": "1.0.0",
   "description": "Accessible React chatbot with local replies, async streaming, persistence and speech.",
   "author": "InigoRomero",
   "license": "MIT",
@@ -71,5 +71,8 @@
   },
   "overrides": {
     "esbuild": "^0.28.2"
+  },
+  "dependencies": {
+    "react-chat-bot42": "^1.0.0-next.0"
   }
 }

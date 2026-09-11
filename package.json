@@ -1,6 +1,6 @@
 {
   "name": "react-chat-bot42",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Accessible React chatbot with local replies, async streaming, persistence and speech.",
   "author": "InigoRomero",
   "license": "MIT",

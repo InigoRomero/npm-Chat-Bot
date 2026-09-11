@@ -1,5 +1,7 @@
 # Interactive example
 
+**[Open the live demo](https://inigoromero.github.io/npm-Chat-Bot/)** — try the chatbot directly in your browser.
+
 From the repository root, with Node 22.12+:
 
 ```sh

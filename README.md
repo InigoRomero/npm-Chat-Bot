@@ -1,12 +1,20 @@
 # react-chat-bot42
 
+**[Try the live demo](https://inigoromero.github.io/npm-Chat-Bot/)** · [npm package](https://www.npmjs.com/package/react-chat-bot42)
+
 A small, accessible chatbot component and headless hook for **React 18 and 19**, written in TypeScript. Use predefined replies or connect your own backend with an async response provider. No runtime dependencies beyond React.
 
-> This branch prepares **1.0.0-next.0**. It is a breaking upgrade from 0.7.x and has not been published to npm by this change. See [migration notes](#migrating-from-07x).
+> **1.0.0 is available on npm.** This is a breaking upgrade from 0.7.x. See [migration notes](#migrating-from-07x).
 
 ## Quick start
 
-After this version is published, install the selected version of `react-chat-bot42`. To try the current branch before publication, run `npm ci && npm pack` and install the generated `.tgz` in your application.
+```sh
+npm install react-chat-bot42
+```
+
+[Open the live demo](https://inigoromero.github.io/npm-Chat-Bot/) to try local replies, simulated streaming, stop/retry controls and themes without installing anything.
+
+To test unpublished repository changes, run `npm ci && npm pack` and install the generated `.tgz` in your application.
 
 ```tsx
 import ReactChatBot from 'react-chat-bot42';
@@ -230,6 +238,6 @@ npm run test:watch
 
 CI runs on Node 22/24 with React 18/19. The package test installs the tarball in an isolated consumer and verifies ESM, CommonJS, server rendering, both TypeScript export paths and CSS entry points. React is externalized from the library bundle. The demo deploys to the existing GitHub Pages branch after successful validation on `main`. npm publication remains a separate release step.
 
-For a release, review the migration, choose the version, run `npm run check`, inspect `npm pack --dry-run`, and publish under an appropriate npm dist-tag (for example `next` for this prerelease). Do not publish a prerelease to `latest` by accident.
+For a release, review the migration, choose the version, run `npm run check`, inspect `npm pack --dry-run`, and publish under an appropriate npm dist-tag (`latest` for stable releases or `next` for prereleases). Do not publish a prerelease to `latest` by accident.
 
 MIT © Iñigo Romero. Legacy demo icons retained in `example/public` were attributed by the original project to [Smashicons](https://www.flaticon.com/authors/smashicons) and [Freepik](https://www.flaticon.com/authors/freepik) on Flaticon.
